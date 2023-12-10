@@ -7,6 +7,7 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import Alert from '@mui/material/Alert';
 
 
 const Register = () => {
@@ -16,23 +17,48 @@ const Register = () => {
   const [confirmpassword, setConfirmpassword] = useState('');
    const [email, setEmail] = useState('');
    const [msg, setMsg] = useState('');
+   const [alert, setAlert] = useState(null); // State to manage the alert
+   const [alertMsg, setAlertMsg] = useState('');
+
    const navigate = useNavigate();
 
  
    const handleRegister = async (e) => {
     e.preventDefault();
+    if (!username || !password || !confirmpassword || !email) {
+      console.log("please fill all the fields");
+      setAlert(
+          <Alert severity="info" onClose={() => setAlert(null)}>Please fill in all the fields</Alert>
+                
+        );
+       return;
+    }
     try {
       const response = await axios.post('http://localhost:5000/api/register', {
         username: username,
         email: email,
         password: password,
       });
-      console.log('Registration successful:', response.data);
-      navigate('/login');
+      
+      
+      setAlert(
+        <Alert severity="success" onClose={() => setAlert(null)}>Registration Succesfull<br />
+        <Link to="/login" variant="body2">
+          {"Login."}
+      </Link>
+      </Alert>
+              
+      );
     } catch (error) {
+      setAlert(
+        <Alert severity="warning" onClose={() => setAlert(null)}>
+          Email already exists</Alert>
+              
+      );
       console.error('Registration failed:', error);
-      if (error.response) {
-        setMsg(error.response.data.msg);
+      if (error.response && error.response.data.msg) {
+        // Display an alert with the error message
+        setAlertMsg(error.response.data.msg);
       }
     }
   };
@@ -43,10 +69,20 @@ const Register = () => {
  
 
   return (
-     
+    <div
+    style={{
+      backgroundImage: `url(https://www.adobe.com/content/dam/cc/us/en/creativecloud/photography/discover/bokeh-effect/bokeh_P3a_690x450.jpg.img.jpg)`,
+      backgroundSize: 'cover',
+      height: '100vh', // Adjust the height as needed
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+    }}
+  >
     <Container component="main" maxWidth="sm">
       <Box
         sx={{
+          backgroundColor: 'rgba(255, 255, 255, 010)',
           boxShadow: 3,
           borderRadius: 2,
           px: 4,
@@ -126,75 +162,19 @@ const Register = () => {
         </Box>
       </Box>
     </Container>
-    
+    <Box
+      sx={{
+        position: 'absolute',
+        bottom: 16, // Adjust the distance from the bottom as needed
+        left: '50%',
+        transform: 'translateX(-50%)',
+      }}
+    >
+      {alert}
+    </Box>
+    </div>
   )
 }
 
 export default Register;
-{/*import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import axios from "axios";
-import '../App.css';
-
-
-const Register = () => {
-    const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmpassword, setConfirmpassword] = useState('');
-   const [email, setEmail] = useState('');
-   const navigate = useNavigate();
-
-
-   const handleRegister = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post('http://localhost:5000/api/register', {
-        username: username,
-        email: email,
-        password: password,
-      });
-      console.log('Registration successful:', response.data);
-      navigate('/login');
-    } catch (error) {
-      console.error('Registration failed:', error);
-      
-      
-    }
-  };
-
-
-
-  return (
-    <div className="registration">
-           <h1>Registration</h1>
-           <label>Username</label>
-           <input type="text" 
-            onChange={(e) => setUsername(e.target.value)}
-            value={username}
-            /><br/>
-            <label>Email</label>
-           <input type="email" 
-           onChange={(e) => setEmail(e.target.value)}
-           value={email}/> <br />
-           <label>Password</label>
-           <input type="password" 
-           onChange={(e) => setPassword(e.target.value)}
-           value={password}/> <br />
-           <label>Confirm Password</label>
-           <input type="password" 
-           onChange={(e) => setConfirmpassword(e.target.value)}
-           value={confirmpassword}/> <br />
-           <button onClick={handleRegister}> Register</button>
-           <Link to="/login" variant="body2">
-                {"Have an account? Login."}
-              </Link>
-        </div>
-  )
-}
-
-export default Register
-*/}
-
-
-
-
+ 
