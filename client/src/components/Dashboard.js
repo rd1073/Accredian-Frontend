@@ -1,29 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom';
+
+
+
+
+
 
 const Dashboard = () => {
-  const [user, setUser] = useState(null);
+  const userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get('http://localhost:5000/api/user', { withCredentials: true });
-        setUser(response.data.user);
-      } catch (error) {
-        console.error('Error fetching user:', error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
+  const handleLogout = () => {
+    sessionStorage.removeItem('userInfo');
+  
+    // Redirect to the login page after logout
+    navigate('/login');
+  
+  };
   return (
     <div>
-      {user ? (
-        <h1>Welcome, {user.email}!</h1>
-      ) : (
-        <h1>Loading...</h1>
-      )}
+       
+        <h1>Welcome, {userInfo.username}!</h1>
+        <button onClick={handleLogout}>Logout</button>
+
+      
     </div>
   );
 };

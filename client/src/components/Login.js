@@ -16,7 +16,7 @@ const Login = () => {
     const [msg, setMsg] = useState('');
     const navigate = useNavigate();
 
-    const handleLogin = async (e) => {
+    {/*const handleLogin = async (e) => {
         e.preventDefault();
         try {
             await axios.post('http://localhost:5000/api/login', {
@@ -25,12 +25,48 @@ const Login = () => {
             });
             console.log("Login succefull")
             navigate("/dashboard");
+            sessionStorage.setItem("userInfo", JSON.stringify(data));
+
         } catch (error) {
             if (error.response) {
                 setMsg(error.response.data.msg);
             }
         }
-    }
+    }*/}
+
+    const handleLogin = async () => {
+      if (!email || !password) {
+        console.log("please fill all the fields");
+         return;
+      }
+  
+      try {
+        const config = {
+          headers: {
+            "Content-type": "application/json",
+          },
+        };
+        const { data } = await axios.post(
+          "http://localhost:5000/api/login",
+          {
+          
+            email,
+            password,
+            
+          },
+          config
+        );
+        console.log(data);
+        console.log("login succesfull");
+        sessionStorage.setItem("userInfo", JSON.stringify(data));
+        
+        navigate('/dashboard');
+      } catch (error) {
+        console.log(error);
+       }
+
+    };
+  
 
 
   return (
