@@ -33,6 +33,13 @@ const Register = () => {
         );
        return;
     }
+    if (password!=confirmpassword) {
+       setAlert(
+          <Alert severity="error" onClose={() => setAlert(null)}>Passwords do not match</Alert>
+                
+        );
+       return;
+    }
     try {
       const response = await axios.post('http://localhost:5000/api/register', {
         username: username,
@@ -123,6 +130,8 @@ const Register = () => {
             margin="normal"
             required
             fullWidth
+            type="password"
+
             label="Confirm password"
             value={confirmpassword}
             onChange={(e) => setConfirmpassword(e.target.value)}
