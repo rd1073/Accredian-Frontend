@@ -22,7 +22,7 @@ const Register = () => {
    const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/api/users', {
+      const response = await axios.post('http://localhost:5000/api/register', {
         username: username,
         email: email,
         password: password,
@@ -131,3 +131,70 @@ const Register = () => {
 }
 
 export default Register;
+{/*import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from "axios";
+import '../App.css';
+
+
+const Register = () => {
+    const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmpassword, setConfirmpassword] = useState('');
+   const [email, setEmail] = useState('');
+   const navigate = useNavigate();
+
+
+   const handleRegister = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post('http://localhost:5000/api/register', {
+        username: username,
+        email: email,
+        password: password,
+      });
+      console.log('Registration successful:', response.data);
+      navigate('/login');
+    } catch (error) {
+      console.error('Registration failed:', error);
+      
+      
+    }
+  };
+
+
+
+  return (
+    <div className="registration">
+           <h1>Registration</h1>
+           <label>Username</label>
+           <input type="text" 
+            onChange={(e) => setUsername(e.target.value)}
+            value={username}
+            /><br/>
+            <label>Email</label>
+           <input type="email" 
+           onChange={(e) => setEmail(e.target.value)}
+           value={email}/> <br />
+           <label>Password</label>
+           <input type="password" 
+           onChange={(e) => setPassword(e.target.value)}
+           value={password}/> <br />
+           <label>Confirm Password</label>
+           <input type="password" 
+           onChange={(e) => setConfirmpassword(e.target.value)}
+           value={confirmpassword}/> <br />
+           <button onClick={handleRegister}> Register</button>
+           <Link to="/login" variant="body2">
+                {"Have an account? Login."}
+              </Link>
+        </div>
+  )
+}
+
+export default Register
+*/}
+
+
+
+
