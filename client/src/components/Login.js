@@ -11,31 +11,15 @@ import Container from "@mui/material/Container";
 
 
 const Login = () => {
-    const [email, setEmail] = useState('');
+  const [identifier, setIdentifier] = useState(''); // Change to 'identifier'
+
     const [password, setPassword] = useState('');
     const [msg, setMsg] = useState('');
     const navigate = useNavigate();
 
-    {/*const handleLogin = async (e) => {
-        e.preventDefault();
-        try {
-            await axios.post('http://localhost:5000/api/login', {
-                email:email,
-                password: password
-            });
-            console.log("Login succefull")
-            navigate("/dashboard");
-            sessionStorage.setItem("userInfo", JSON.stringify(data));
-
-        } catch (error) {
-            if (error.response) {
-                setMsg(error.response.data.msg);
-            }
-        }
-    }*/}
-
+      
     const handleLogin = async () => {
-      if (!email || !password) {
+      if (!identifier || !password) {
         console.log("please fill all the fields");
          return;
       }
@@ -50,7 +34,7 @@ const Login = () => {
           "http://localhost:5000/api/login",
           {
           
-            email,
+            identifier,
             password,
             
           },
@@ -96,8 +80,8 @@ const Login = () => {
             id="username"
             label="Username or Email"
             name="username"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={identifier}
+            onChange={(e) => setIdentifier(e.target.value)}
             autoComplete="username"
             autoFocus
           />
